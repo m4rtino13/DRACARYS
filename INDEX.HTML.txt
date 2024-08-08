@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dracarys Token Presale</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+background-color: #1a1a2e;
+color: #fff;
+text-align: center;
+padding: 20px;
+}
+
+.container {
+max-width: 800px;
+margin: auto;
+}
+
+h1 {
+color: #e94560;
+font-size: 3rem;
+}
+
+.symbol {
+font-size: 1.5rem;
+margin-bottom: 20px;
+}
+
+.countdown, .supply-info, .purchase-limit {
+font-size: 1.2rem;
+margin: 20px 0;
+}
+
+.buy-section {
+margin: 40px 0;
+}
+
+button {
+background-color: #e94560;
+border: none;
+padding: 15px 30px;
+color: white;
+font-size: 1.2rem;
+cursor: pointer;
+border-radius: 5px;
+}
+
+button:hover {
+background-color: #d1344a;
+}
+
+.connected-wallet {
+margin-top: 20px;
+}
+
+.footer {
+margin-top: 50px;
+font-size: 0.9rem;
+color: #ccc;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+<h1>Dracarys Token Presale</h1>
+<div class="symbol">Symbol: DRYS</div>
+<p>The Meme Coin to the Moon!</p>
+
+<div class="supply-info">
+Total Supply: 940,000,000 DRYS <br>
+Presale Allocation: 282,000,000 DRYS (30%)
+</div>
+
+<div class="purchase-limit">
+Maximum Purchase per Wallet: $500
+</div>
+
+<div class="countdown">
+Presale starts in: <span id="countdown-timer"></span>
+</div>
+
+<div class="buy-section">
+<button id="connect-wallet-button">Connect Wallet</button>
+<div id="wallet-status" class="connected-wallet"></div>
+<div id="purchase-section" style="display: none;">
+<p>Buy DRYS Tokens</p>
+<p>Maximum purchase limit: $500</p>
+<button id="buy-tokens-button">Buy Now</button>
+</div>
+</div>
+</div>
+
+<div class="footer">
+<p>© 2024 Dracarys. All rights reserved.</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/solana-web3.js/1.30.0/solana-web3.min.js"></script>
+<script>
+// Countdown Timer
+const countdownDate = new Date("Sep 1, 2024 00:00:00").getTime();
+const countdownTimer = document.getElementById("countdown-timer");
+
+const updateCountdown = setInterval(() => {
+const now = new Date().getTime();
+const timeLeft = countdownDate - now;
+
+const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+countdownTimer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+if (timeLeft < 0) {
+clearInterval(updateCountdown);
+countdownTimer.innerHTML = "Presale is live!";
+}
+}, 1000);
+
+// Solana Wallet Connection
+const connectWalletButton = document.getElementById("connect-wallet-button");
+const walletStatus = document.getElementById("wallet-status");
+const purchaseSection = document.getElementById("purchase-section");
+
+connectWalletButton.addEventListener("click", async () => {
+if (window.solana && window.solana.isPhantom) {
+try {
+const resp = await window.solana.connect();
+const publicKey = resp.publicKey.toString();
+walletStatus.innerHTML = `Connected: ${publicKey}`;
+connectWalletButton.style.display = 'none';
+purchaseSection.style.display = 'block';
+} catch (err) {
+console.error("Wallet connection failed:", err);
+}
+} else {
+walletStatus.innerHTML = "Phantom Wallet not found! Please install it.";
+}
+});
+
+// Token Purchase Functionality (Placeholder)
+const buyTokensButton = document.getElementById("buy-tokens-button");
+
+buyTokensButton.addEventListener("click", () => {
+alert("Purchase functionality coming soon!");
+});
+</script>
+</body>
+
+</html>
